@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
@@ -13,13 +13,28 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-table',
   templateUrl: 'table.html',
 })
-export class TablePage {
-  columns = [];
-  rows = [];
-  totalTime: string; totalScore: string; categories: string;
-
+export class TablePage implements OnInit {
+  categories: string;
+  rows;
+  columns;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
   ngOnInit() {
-    let data = [{
+    this.categories = 'users';
+    this.columns = [{
+      name: 'Question (Marks)',
+      prop: 'qtitle',
+      sortable: true
+    },{
+      name: 'Time',
+      prop: 'time',
+      sortable: true
+    },{
+      name: 'Result',
+      prop: 'result',
+      sortable: false
+    }]
+    let rowsData = [{
       "contentId": "do_30013147",
       "correct": 1,
       "hierarchyData": "",
@@ -170,50 +185,22 @@ export class TablePage {
       "timestamp": 1531396931366,
       "uid": "8059d370-23d7-43ac-8f95-e8872b65eb45"
     }]
-
-    this.rows = data.map(row => {
+    this.rows = rowsData.map(row => {
       return {
         "time": this.convertTotalTime(row.timespent),
         "result": row.score + '/' + row.maxScore,
-        "qtitle": row.qtitle
+        "qtitle": row.qtitle,
+        "maxScore" : row.maxScore,
+        "score": row.score,
+        "timespent": row.timespent
       }
     });
-
-    let totalQuestionMaxScore = data.reduce(function (acc, val) { return acc + val.maxScore; }, 0)
-    let totalQuestionScore = data.reduce(function (acc, val) { return acc + val.score; }, 0)
-    let totalTimeSpent = data.reduce(function (acc, val) { return acc + val.timespent; }, 0)
-    this.totalTime = this.convertTotalTime(totalTimeSpent);
-    this.totalScore = totalQuestionScore + '/' + totalQuestionMaxScore;
   }
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-
-
-  }
-
   convertTotalTime(time: number): string {
     var mm = Math.floor(time / 60);
     var ss = Math.floor(time % 60);
     return (mm > 9 ? mm : ("0" + mm)) + ":" + (ss > 9 ? ss : ("0" + ss));
   }
-
-  // Function to add a custom class to columns
-  getCellClass(data) {
-    let className: string;
-    switch (data.column.prop.toUpperCase()) {
-      case "QTITLE":
-        className = " datatable-body-cell-qtitle";
-        break;
-      case "TIME":
-        className = " datatable-body-cell-time";
-        break;
-      case "RESULT":
-        className = " datatable-body-cell-result";
-        break;
-    }
-    return className;
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad TablePage');
   }

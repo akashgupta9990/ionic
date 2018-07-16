@@ -1,25 +1,16 @@
-<div class="assessment-details">
-  <div class="assessment-container"></div>
-  <div class="assessment-card">
-    <div class="assessment-score">
-      <p>Score</p>
-      <div class="assessment-stats">
-        <ion-icon name="stats"></ion-icon>
-        <span>{{totalScore}}</span>
-      </div>
-    </div>
-    <div class="assessment-time">
-      <p>Total Time</p>
-      <div class="assessment-result">
-        <ion-icon md="md-time"></ion-icon>
-        <span>{{totalTime}}</span>
-      </div>
-    </div>
-  </div>
+<!-- <div class="bar bar-header bar-dark">
+  <ion-segment [(ngModel)]="categories">
+    <ion-segment-button value="users">By Users</ion-segment-button>
+    <ion-segment-button value="assessment">By Questions</ion-segment-button>
+  </ion-segment>
 </div>
-<ngx-datatable id="datatable" class="material striped" [rows]="rows" [rowClass]="getCell" [columns]="columns" [scrollbarV]="true"
-  [scrollbarH]="false" columnMode="flex" [headerHeight]="'50'" [footerHeight]="50" [rowHeight]="50">
-  <ngx-datatable-column name="Question (Marks)" prop="qtitle" [flexGrow]="2" [cellClass]="getCellClass" headerClass="assessment-header"></ngx-datatable-column>
-  <ngx-datatable-column name="Time" prop="time" [flexGrow]="1" [cellClass]="getCellClass" headerClass="assessment-header"></ngx-datatable-column>
-  <ngx-datatable-column name="Result" prop="result" [flexGrow]="1" [cellClass]="getCellClass" [sortable]="false" headerClass="assessment-header"></ngx-datatable-column>
-</ngx-datatable>
+<div [ngSwitch]="categories">
+  <ion-list *ngSwitchCase="'users'"> -->
+    <assessment-details [rows]="rows" [columns]="columns"></assessment-details>
+  <!-- </ion-list>
+  <ion-list *ngSwitchCase="'assessment'">
+    <ion-item>Game of Thrones</ion-item>
+    <ion-item>Daredevil</ion-item>
+    <ion-item>Arrow</ion-item>
+  </ion-list>
+</div> -->
